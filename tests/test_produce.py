@@ -1,15 +1,10 @@
-from testcontainers.redis import RedisContainer
+import redis
 
 from sejoung.producer.produce import produce
 
 
-def test_produce():
-    with RedisContainer() as redis:
-        redis_container_ip_address = redis.get_docker_client().bridge_ip(redis._container.id)
-        port = redis.port_to_expose
-        produce(redis_container_ip_address, port)
-
-        client = redis.get_client()
-        actual = client.llen("rq:queue:default")
-
-        assert actual == 1
+def test_produce(redis_container_url: str):
+    produce(redis_container_url)
+    client = redis.from_url(redis_container_url)
+    actual = client.llen("rq:queue:default")
+    assert actual == 1
