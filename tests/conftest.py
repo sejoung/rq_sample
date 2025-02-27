@@ -2,7 +2,7 @@ import pytest
 from testcontainers.redis import RedisContainer
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixture(autouse=True, scope="function")
 def redis_container_url():
     """Start a Redis container."""
     with RedisContainer("redis:7.0") as redis:
