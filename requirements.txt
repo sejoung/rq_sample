@@ -3,3 +3,5 @@ black
 pylint
 testcontainers
 testcontainers-redis
+rq
+Redis
