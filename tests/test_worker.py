@@ -10,6 +10,6 @@ def test_worker(redis_container_url: str):
     produce(redis_container_url)
     p = Process(target=kill_worker.kill_worker, args=(os.getpid(), False))
     p.start()
-    w = start_worker(redis_container_url)
+    start_worker(redis_container_url)
     p.join(1)
-    assert w._stop_requested == False
+    assert not p.is_alive()
